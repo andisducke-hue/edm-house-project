@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Artists</h1>
+
+<form method="POST" action="/add_artist">
+    <input type="text" name="name" placeholder="Artist name" required>
+    <button type="submit">Add</button>
+</form>
+
+<hr>
+
+<ul>
+    {% for artist in artists %}
+        <li>
+            {{ artist[1] }}
+            <a href="/delete_artist/{{ artist[0] }}">Delete</a>
+        </li>
+    {% endfor %}
+</ul>
+
+{% endblock %}
