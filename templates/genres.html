@@ -1,4 +1,24 @@
 {% extends "base.html" %}
+
 {% block content %}
-<h1>Genres page</h1>
+<h1>Genres</h1>
+
+<!-- ADD FORM -->
+<form action="/add_genre" method="POST">
+    <input type="text" name="name" placeholder="Genre name" required>
+    <input type="text" name="description" placeholder="Description">
+    <button type="submit">Add Genre</button>
+</form>
+
+<hr>
+
+<ul>
+    {% for genre in genres %}
+        <li>
+            <strong>{{ genre[1] }}</strong> - {{ genre[2] }}
+            <a href="/delete_genre/{{ genre[0] }}">Delete</a>
+        </li>
+    {% endfor %}
+</ul>
+
 {% endblock %}
