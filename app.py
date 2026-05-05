@@ -108,6 +108,119 @@ def delete_artist(id):
 
     return redirect("/artists")
 
+@app.route("/edit_artist/<int:id>", methods=["GET", "POST"])
+def edit_artist(id):
+    conn = sqlite3.connect("database.db")
+    cursor = conn.cursor()
+
+    if request.method == "POST":
+        name = request.form["name"]
+
+        cursor.execute("UPDATE artists SET name=? WHERE id=?", (name, id))
+        conn.commit()
+        conn.close()
+        return redirect("/artists")
+
+    cursor.execute("SELECT * FROM artists WHERE id=?", (id,))
+    artist = cursor.fetchone()
+    conn.close()
+
+    return render_template("edit_artist.html", artist=artist)
+
+@app.route("/tracks")
+def tracks():
+    conn = sqlite3.connect("database.db")
+    cursor = conn.cursor()
+
+    cursor.execute("""
+    SELECT tracks.id, tracks.title, tracks.youtube_link,
+           artists.name, genres.name
+    FROM tracks
+    JOIN artists ON tracks.artist_id = artists.id
+    JOIN genres ON tracks.genre_id = genres.id
+    """)
+
+    tracks = cursor.fetchall()
+
+    cursor.execute("SELECT * FROM artists")
+    artists = cursor.fetchall()
+
+    cursor.execute("SELECT * FROM genres")
+    genres = cursor.fetchall()
+
+    conn.close()
+
+    return render_template("tracks.html", tracks=tracks, artists=artists, genres=genres)
+
+@app.route("/add_track", methods=["POST"])
+def add_track():
+    title = request.form["title"]
+    youtube_link = request.form["youtube_link"]
+    artist_id = request.form["artist_id"]
+    genre_id = request.form["genre_id"]
+
+    conn = sqlite3.connect("database.db")
+    cursor = conn.cursor()
+
+    cursor.execute("""
+    INSERT INTO tracks (title, youtube_link, artist_id, genre_id)
+    VALUES (?, ?, ?, ?)
+    """, (title, youtube_link, artist_id, genre_id))
+
+    conn.commit()
+    conn.close()
+
+    return redirect("/tracks")
+
+@app.route("/delete_track/<int:id>")
+def delete_track(id):
+    conn = sqlite3.connect("database.db")
+    cursor = conn.cursor()
+
+    cursor.execute("DELETE FROM tracks WHERE id=?", (id,))
+
+    conn.commit()
+    conn.close()
+
+    return redirect("/tracks")
+
+@app.route("/edit_track/<int:id>", methods=["GET", "POST"])
+def edit_track(id):
+    conn = sqlite3.connect("database.db")
+    cursor = conn.cursor()
+
+    if request.method == "POST":
+        title = request.form["title"]
+        youtube_link = request.form["youtube_link"]
+        artist_id = request.form["artist_id"]
+        genre_id = request.form["genre_id"]
+
+        cursor.execute("""
+        UPDATE tracks
+        SET title=?, youtube_link=?, artist_id=?, genre_id=?
+        WHERE id=?
+        """, (title, youtube_link, artist_id, genre_id, id))
+
+        conn.commit()
+        conn.close()
+        return redirect("/tracks")
+
+    cursor.execute("SELECT * FROM tracks WHERE id=?", (id,))
+    track = cursor.fetchone()
+
+    cursor.execute("SELECT * FROM artists")
+    artists = cursor.fetchall()
+
+    cursor.execute("SELECT * FROM genres")
+    genres = cursor.fetchall()
+
+    conn.close()
+
+    return render_template("edit_track.html",
+                           track=track,
+                           artists=artists,
+                           genres=genres)
+
 def init_db():
     conn = sqlite3.connect("database.db")
     cursor = conn.cursor()

@@ -13,13 +13,20 @@
 <hr>
 
 <ul>
+    <div class="card-container">
     {% for genre in genres %}
-        <li>
-            <strong>{{ genre[1] }}</strong> - {{ genre[2] }}
-            <a href="/delete_genre/{{ genre[0] }}">Delete</a>
-            <a href="/edit_genre/{{ genre[0] }}">Edit</a>
-        </li>
+        <div class="card">
+
+            <h3>{{ genre[1] }}</h3>
+
+            <p>{{ genre[2] }}</p>
+
+            <a class="btn delete" href="/delete_genre/{{ genre[0] }}">Delete</a>
+            <a class="btn edit" href="/edit_genre/{{ genre[0] }}">Edit</a>
+
+        </div>
     {% endfor %}
+    </div>
 </ul>
 
 {% endblock %}

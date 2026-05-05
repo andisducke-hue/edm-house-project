@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Edit Track</h1>
+
+<form method="POST">
+
+    <input type="text" name="title" value="{{ track[1] }}" required>
+
+    <input type="text" name="youtube_link" value="{{ track[2] }}">
+
+    <!-- ARTISTS DROPDOWN -->
+    <select name="artist_id">
+        {% for artist in artists %}
+            <option value="{{ artist[0] }}"
+                {% if artist[0] == track[3] %} selected {% endif %}>
+                {{ artist[1] }}
+            </option>
+        {% endfor %}
+    </select>
+
+    <!-- GENRES DROPDOWN -->
+    <select name="genre_id">
+        {% for genre in genres %}
+            <option value="{{ genre[0] }}"
+                {% if genre[0] == track[4] %} selected {% endif %}>
+                {{ genre[1] }}
+            </option>
+        {% endfor %}
+    </select>
+
+    <button type="submit">Save</button>
+</form>
+
+{% endblock %}

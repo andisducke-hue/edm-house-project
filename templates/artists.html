@@ -11,12 +11,20 @@
 <hr>
 
 <ul>
+    <div class="card-container">
     {% for artist in artists %}
-        <li>
-            {{ artist[1] }}
-            <a href="/delete_artist/{{ artist[0] }}">Delete</a>
-        </li>
+        <div class="card">
+
+            <h3>{{ artist[1] }}</h3>
+
+            <img src="{{ artist[2] }}" class="artist-img">
+
+            <a class="btn delete" href="/delete_artist/{{ artist[0] }}">Delete</a>
+            <a class="btn edit" href="/edit_artist/{{ artist[0] }}">Edit</a>
+
+        </div>
     {% endfor %}
+    </div>
 </ul>
 
 {% endblock %}

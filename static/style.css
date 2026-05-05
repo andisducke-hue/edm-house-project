@@ -1,0 +1,118 @@
+body {
+    background-color: #0a0a0a;
+    color: white;
+    font-family: Arial, sans-serif;
+    max-width: 1000px;
+    margin: auto;
+}
+
+nav {
+    background: #111;
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+nav a {
+    color: #00ffe1;
+    text-decoration: none;
+}
+
+nav a:hover {
+    color: white;
+}
+
+/* TRACKS */
+
+.track-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.track-card {
+    background: #1a1a1a;
+    padding: 15px;
+    border-radius: 10px;
+    width: 300px;
+    box-shadow: 0 0 10px #00ffe1;
+    transition: 0.3s;
+}
+
+.track-card:hover {
+    transform: scale(1.05);
+}
+
+/* FORMS */
+
+input, select {
+    width: 100%;
+    padding: 10px;
+    margin: 5px 0;
+    border-radius: 6px;
+    border: none;
+}
+
+button {
+    padding: 10px 15px;
+    background: #00ffe1;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #00cfc0;
+}
+
+/* BUTTONS */
+
+.btn {
+    display: inline-block;
+    padding: 6px 10px;
+    margin: 5px;
+    border-radius: 6px;
+    text-decoration: none;
+}
+
+.edit {
+    background: #00ffe1;
+    color: black;
+}
+
+.delete {
+    background: red;
+    color: white;
+}
+
+/* CARDS (artists + genres) */
+
+.card-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.card {
+    background: #1a1a1a;
+    padding: 15px;
+    border-radius: 12px;
+    width: 250px;
+    box-shadow: 0 0 15px #00ffe1;
+}
+
+.card:hover {
+    transform: scale(1.05);
+    transition: 0.3s;
+}
+
+.artist-img {
+    width: 100%;
+    border-radius: 10px;
+}
+
+h1 {
+    text-align: center;
+}
+

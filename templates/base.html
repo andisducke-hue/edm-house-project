@@ -2,14 +2,20 @@
 <html>
 <head>
     <title>EDM House</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
+
     <nav>
         <a href="/">Home</a>
         <a href="/genres">Genres</a>
         <a href="/artists">Artists</a>
+        <a href="/tracks">Tracks</a>
     </nav>
+
     <hr>
+
     {% block content %}{% endblock %}
+
 </body>
 </html>
