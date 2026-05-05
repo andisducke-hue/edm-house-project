@@ -84,11 +84,15 @@ def artists():
 @app.route("/add_artist", methods=["POST"])
 def add_artist():
     name = request.form["name"]
+    image = request.form["image"]
 
     conn = sqlite3.connect("database.db")
     cursor = conn.cursor()
 
-    cursor.execute("INSERT INTO artists (name) VALUES (?)", (name,))
+    cursor.execute(
+        "INSERT INTO artists (name, image) VALUES (?, ?)",
+        (name, image)
+    )
 
     conn.commit()
     conn.close()
@@ -220,11 +224,92 @@ def edit_track(id):
                            track=track,
                            artists=artists,
                            genres=genres)
+    
+@app.route("/playlists")
+def playlists():
+    conn = sqlite3.connect("database.db")
+    cursor = conn.cursor()
+
+    # pareizi: dabū VISUS playlists
+    cursor.execute("""
+    SELECT playlists.id, playlists.name, genres.name
+    FROM playlists
+    JOIN genres ON playlists.genre_id = genres.id
+    """)
+    playlists = cursor.fetchall()
+
+    # genres dropdownam
+    cursor.execute("SELECT * FROM genres")
+    genres = cursor.fetchall()
+
+    conn.close()
+
+    return render_template(
+        "playlists.html",
+        playlists=playlists,
+        genres=genres
+    )
+
+@app.route("/add_playlist", methods=["POST"])
+def add_playlist():
+    name = request.form["name"]
+    genre_id = request.form["genre_id"]
+
+    conn = sqlite3.connect("database.db")
+    cursor = conn.cursor()
+
+    cursor.execute(
+        "INSERT INTO playlists (name, genre_id) VALUES (?, ?)",
+        (name, genre_id)
+    )
+
+    conn.commit()
+    conn.close()
+
+    return redirect("/playlists")
+
+@app.route("/delete_playlist/<int:id>")
+def delete_playlist(id):
+    conn = sqlite3.connect("database.db")
+    cursor = conn.cursor()
+
+    cursor.execute("DELETE FROM playlists WHERE id=?", (id,))
+
+    conn.commit()
+    conn.close()
+
+    return redirect("/playlists")
+
+@app.route("/playlist/<int:id>")
+def playlist_detail(id):
+    conn = sqlite3.connect("database.db")
+    cursor = conn.cursor()
+
+    # dabū playlist
+    cursor.execute("SELECT * FROM playlists WHERE id=?", (id,))
+    playlist = cursor.fetchone()
+
+    # dabū VISUS trackus ar to pašu genre
+    cursor.execute("""
+    SELECT tracks.title, artists.name, tracks.youtube_link
+    FROM tracks
+    JOIN artists ON tracks.artist_id = artists.id
+    WHERE tracks.genre_id = ?
+    """, (playlist[2],))
+
+    tracks = cursor.fetchall()
+
+    conn.close()
+
+    return render_template("playlist_detail.html",
+                           playlist=playlist,
+                           tracks=tracks)
 
 def init_db():
     conn = sqlite3.connect("database.db")
     cursor = conn.cursor()
 
+    # GENRES
     cursor.execute("""
     CREATE TABLE IF NOT EXISTS genres (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -233,13 +318,16 @@ def init_db():
     )
     """)
 
+    # ARTISTS (ar image)
     cursor.execute("""
     CREATE TABLE IF NOT EXISTS artists (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
-        name TEXT NOT NULL
+        name TEXT NOT NULL,
+        image TEXT
     )
     """)
 
+    # TRACKS
     cursor.execute("""
     CREATE TABLE IF NOT EXISTS tracks (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -248,6 +336,16 @@ def init_db():
         artist_id INTEGER,
         genre_id INTEGER,
         FOREIGN KEY (artist_id) REFERENCES artists(id),
+        FOREIGN KEY (genre_id) REFERENCES genres(id)
+    )
+    """)
+
+    # PLAYLISTS (4. tabula)
+    cursor.execute("""
+    CREATE TABLE IF NOT EXISTS playlists (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        name TEXT NOT NULL,
+        genre_id INTEGER,
         FOREIGN KEY (genre_id) REFERENCES genres(id)
     )
     """)
