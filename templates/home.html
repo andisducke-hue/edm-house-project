@@ -1,58 +1,104 @@
 {% extends "base.html" %}
 
 {% block content %}
+
 <div class="container">
-    <h1>EDM House Explorer</h1>
 
-    <p>
-    Explore house music subgenres, discover artists, and listen to tracks.
-    </p>
+    <section class="hero">
 
-    <p>
-    This project showcases different house genres like Deep House, Tech House,
-    Future House and more.
-    </p>
+        <div class="hero-overlay">
 
-    <hr>
+            <h1>HOUSE MUSIC UNIVERSE</h1>
 
-    <h2> The Birth of House Music</h2>
+            <p class="hero-text">
+                Explore deep grooves, festival anthems, underground energy,
+                and the evolution of electronic house music.
+            </p>
 
-    <p>
-    House music originated in the early 1980s in Chicago, USA. It was heavily influenced
-    by disco, funk, and electronic music. DJs and producers started experimenting with
-    drum machines like the Roland TR-808 and TR-909, creating a new, repetitive,
-    dance-focused sound.
-    </p>
+            <p class="hero-text">
+                This project showcases different house genres like Deep House,
+                Tech House, Future House and many more.
+            </p>
 
-    <p>
-    The genre got its name from the famous club <strong>The Warehouse</strong>, where DJ
-    Frankie Knuckles played extended mixes of disco tracks, shaping what would become
-    house music.
-    </p>
+            <a href="/tracks" class="hero-btn">
+                Explore Tracks
+            </a>
 
-    <h2> Evolution of the Genre</h2>
+        </div>
 
-    <p>
-    Over time, house music spread from Chicago to New York, Europe, and the rest of the
-    world. This led to the creation of many subgenres such as:
-    </p>
+    </section>
 
-    <ul>
-        <li>Deep House – smooth, soulful, and atmospheric</li>
-        <li>Tech House – a blend of techno and house</li>
-        <li>French House – disco-influenced with heavy filtering</li>
-        <li>Afro House – rooted in African rhythms and percussion</li>
-    </ul>
+    <section class="info-section">
 
-    <h2> House Music Today</h2>
+        <h2>The Birth of House Music</h2>
 
-    <p>
-    Today, house music is one of the most popular electronic music genres globally.
-    Artists continue to evolve the sound, blending it with pop, techno, and even hip-hop.
-    Festivals, clubs, and streaming platforms keep the genre alive and constantly growing.
-    </p>
+        <p>
+            House music originated in the early 1980s in Chicago, USA.
+            It was heavily influenced by disco, funk, and electronic music.
+            DJs and producers experimented with drum machines like the
+            Roland TR-808 and TR-909, creating a repetitive,
+            dance-focused sound.
+        </p>
+
+        <p>
+            The genre got its name from the famous club
+            <strong>The Warehouse</strong>,
+            where DJ Frankie Knuckles shaped the foundations
+            of modern house music.
+        </p>
+
+        <hr>
+
+        <h2>Evolution of the Genre</h2>
+
+        <p>
+            House music quickly spread from Chicago to New York,
+            Europe, and eventually the entire world.
+            This created multiple iconic subgenres:
+        </p>
+
+        <div class="genre-grid">
+
+            <div class="genre-box">
+                <h3>Deep House</h3>
+                <p>Smooth, emotional, soulful, and atmospheric grooves.</p>
+            </div>
+
+            <div class="genre-box">
+                <h3>Tech House</h3>
+                <p>A darker blend of techno rhythm and house energy.</p>
+            </div>
+
+            <div class="genre-box">
+                <h3>French House</h3>
+                <p>Disco-inspired filtering and funky electronic vibes.</p>
+            </div>
+
+            <div class="genre-box">
+                <h3>Afro House</h3>
+                <p>Organic percussion and African rhythmic influence.</p>
+            </div>
+
+        </div>
+
+        <hr>
+
+        <h2>House Music Today</h2>
+
+        <p>
+            Today, house music dominates clubs, festivals,
+            and streaming platforms worldwide.
+            Artists constantly evolve the genre by mixing it
+            with techno, pop, trance, and hip-hop influences.
+        </p>
+
+        <p>
+            From underground warehouse raves to massive festival stages,
+            house music continues to shape electronic culture globally.
+        </p>
+
+    </section>
+
 </div>
-
-
 
 {% endblock %}

@@ -367,326 +367,309 @@ def init_db():
 init_db()
 
 def seed_data():
-        conn = sqlite3.connect("database.db")
-        cursor = conn.cursor()
+    conn = sqlite3.connect("database.db")
+    cursor = conn.cursor()
 
-        # GENRES
-        cursor.execute("SELECT COUNT(*) FROM genres")
-        if cursor.fetchone()[0] == 0:
-            cursor.execute("INSERT INTO genres (name, description) VALUES (?, ?)",
-                        ("Chicago House", "The original house style from Chicago, built on drum machines, simple basslines, and dancefloor-focused grooves"))
-            cursor.execute("INSERT INTO genres (name, description) VALUES (?, ?)",
-                        ("Acid House", "A hypnotic house style with squelchy TB-303 basslines, repetitive patterns, and a psychedelic club feel."))
-            cursor.execute("INSERT INTO genres (name, description) VALUES (?, ?)",
-                        ("Deep House", "Smooth, soulful, and warm house music with deep bass, jazzy chords, and a relaxed groove."))
-            cursor.execute("INSERT INTO genres (name, description) VALUES (?, ?)",
-                        ("Progressive House", "Builds tension slowly with long breakdowns, evolving melodies, and a big release at the drop."))
-            cursor.execute("INSERT INTO genres (name, description) VALUES (?, ?)",
-                        ("French House", "Funky, filtered, disco-based house with chopped samples, strong groove, and polished club energy."))
-            cursor.execute("INSERT INTO genres (name, description) VALUES (?, ?)",
-                        ("Funky House", "Bright, upbeat house using disco and funk elements, catchy hooks, and a lively dance feel."))
-            cursor.execute("INSERT INTO genres (name, description) VALUES (?, ?)",
-                        ("Tribal House", "Percussion-heavy house with world-music rhythms, chants, and a strong organic drum presence."))
-            cursor.execute("INSERT INTO genres (name, description) VALUES (?, ?)",
-                        ("Afro House", "A house style influenced by African percussion, rhythms, and vocal traditions, often deep and rhythmic."))
-            cursor.execute("INSERT INTO genres (name, description) VALUES (?, ?)",
-                        ("Tropical House", "Light, relaxed house with airy melodies, steel drums, marimbas, and a summer-like mood. "))
-            cursor.execute("INSERT INTO genres (name, description) VALUES (?, ?)",
-                        ("Electro House", "Harder, more aggressive house with heavy synths, strong drops, and a sharper electronic edge."))
-            cursor.execute("INSERT INTO genres (name, description) VALUES (?, ?)",
-                        ("Bass House", "Bass-driven house with punchy low-end, energetic drops, and a more aggressive modern club sound."))
-            cursor.execute("INSERT INTO genres (name, description) VALUES (?, ?)",
-                        ("Slap House", "A modern, radio-friendly house style with bouncy bass, strong beat, and melodic vocals. "))
-            cursor.execute("INSERT INTO genres (name, description) VALUES (?, ?)",
-                        ("Future House", "A modern house style with bright synths, deep bass, and catchy, energetic drop sections. "))
-            cursor.execute("INSERT INTO genres (name, description) VALUES (?, ?)",
-                        ("Garage House", "House music with strong vocal influence, swing, and a link to New York and New Jersey club culture. "))
-            cursor.execute("INSERT INTO genres (name, description) VALUES (?, ?)",
-                        ("Lo-Fi House", "Raw and dusty house with tape noise, imperfect textures, and a nostalgic underground atmosphere. "))
-            cursor.execute("INSERT INTO genres (name, description) VALUES (?, ?)",
-                        ("Deep House", "Smooth, soulful, and warm house music with deep bass, jazzy chords, and a relaxed groove."))
-            cursor.execute("INSERT INTO genres (name, description) VALUES (?, ?)",
-                        ("Minimal House", "A stripped-down house style that focuses on small details, subtle repetition, and sparse arrangement."))
-            cursor.execute("INSERT INTO genres (name, description) VALUES (?, ?)",
-                        ("Latin House", "House music mixed with Latin rhythms, percussion, and melodic elements for a vibrant dance sound."))
+    # =========================
+    # GENRES
+    # =========================
 
-        cursor.execute("SELECT COUNT(*) FROM artists")
-        if cursor.fetchone()[0] == 0:
-            cursor.execute("INSERT INTO artists (name, image, about) VALUES (?, ?, ?)",
-            ("Fred again..",
-            "/static/artist_images/fred-again.jpg",
-            "UK electronic producer blending house, garage, emotional vocals, and live performance energy."))
+    cursor.execute("SELECT COUNT(*) FROM genres")
 
-            cursor.execute("INSERT INTO artists (name, image, about) VALUES (?, ?, ?)",
-            ("FISHER",
-            "/static/artist_images/fisher.jpg",
-            "Australian tech house DJ known for high-energy club tracks and festival anthems."))
+    if cursor.fetchone()[0] == 0:
 
-            cursor.execute("INSERT INTO artists (name, image, about) VALUES (?, ?, ?)",
-            ("John Summit",
-            "/static/artist_images/john-summit.jpg",
-            "American house producer combining festival energy with underground tech house influence."))
+        genres = [
 
-            cursor.execute("INSERT INTO artists (name, image, about) VALUES (?, ?, ?)",
-            ("Dom Dolla",
-            "/static/artist_images/dom-dolla.jpg",
-            "Australian house producer recognized for groovy basslines and modern club records."))
+            ("Chicago House", "The original house style from Chicago, built on drum machines and dance grooves."),
+            ("Acid House", "Hypnotic house music with iconic TB-303 acid basslines."),
+            ("Deep House", "Smooth and soulful house music with deep bass and atmospheric vibes."),
+            ("Progressive House", "Melodic festival-oriented house music with emotional builds."),
+            ("French House", "Disco-inspired filtered house music from France."),
+            ("Funky House", "Groovy and disco-inspired upbeat house music."),
+            ("Tribal House", "Percussion-heavy house with tribal rhythm influences."),
+            ("Afro House", "African-inspired deep rhythmic house music."),
+            ("Tropical House", "Relaxed melodic summer-style house music."),
+            ("Electro House", "Aggressive electronic house with strong drops and synths."),
+            ("Bass House", "Bass-focused energetic modern house music."),
+            ("Slap House", "Modern commercial house with bouncing basslines."),
+            ("Future House", "Modern house with bright synths and future-style grooves."),
+            ("Garage House", "UK garage influenced vocal house music."),
+            ("Lo-Fi House", "Raw nostalgic underground house music."),
+            ("Minimal House", "Minimalistic repetitive stripped-down house grooves."),
+            ("Latin House", "House music blended with Latin rhythms.")
 
-            cursor.execute("INSERT INTO artists (name, image, about) VALUES (?, ?, ?)",
-            ("Chris Lake",
-            "/static/artist_images/chris-lake.jpg",
-            "British electronic producer famous for groove-focused house and tech house music."))
+        ]
 
-            cursor.execute("INSERT INTO artists (name, image, about) VALUES (?, ?, ?)",
-            ("Mau P",
-            "/static/artist_images/mau-p.jpg",
-            "Dutch DJ creating energetic club-focused tech house tracks with catchy hooks."))
+        cursor.executemany(
+            "INSERT INTO genres (name, description) VALUES (?, ?)",
+            genres
+        )
 
-            cursor.execute("INSERT INTO artists (name, image, about) VALUES (?, ?, ?)",
-            ("KREAM",
-            "/static/artist_images/kream.jpg",
-            "Norwegian producer duo creating melodic deep house and modern dance music."))
+    # =========================
+    # ARTISTS
+    # =========================
 
-            cursor.execute("INSERT INTO artists (name, image, about) VALUES (?, ?, ?)",
-            ("MEDUZA",
-            "/static/artist_images/meduza.jpg",
-            "Italian electronic trio known for emotional deep house and radio crossover hits."))
+    cursor.execute("SELECT COUNT(*) FROM artists")
 
-            cursor.execute("INSERT INTO artists (name, image, about) VALUES (?, ?, ?)",
-            ("Claptone",
-            "/static/artist_images/claptone.jpg",
-            "Mysterious house DJ blending deep house grooves with atmospheric melodies."))
+    if cursor.fetchone()[0] == 0:
 
-            cursor.execute("INSERT INTO artists (name, image, about) VALUES (?, ?, ?)",
-            ("MK",
-            "/static/artist_images/mk.jpg",
-            "Legendary American house producer influential in deep house and vocal house music."))
+        artists = [
 
-            cursor.execute("INSERT INTO artists (name, image, about) VALUES (?, ?, ?)",
-            ("Peggy Gou",
-            "/static/artist_images/peggy-gou.jpg",
-            "South Korean DJ and producer mixing house, techno, and stylish underground club sounds."))
+            ("Fred again..", "/static/artist_images/fred-again.jpg",
+             "UK electronic producer blending emotional vocals with house and garage."),
 
-            cursor.execute("INSERT INTO artists (name, image, about) VALUES (?, ?, ?)",
-            ("CamelPhat",
-            "/static/artist_images/camelphat.jpg",
-            "British electronic duo known for melodic deep house and progressive club tracks."))
+            ("FISHER", "/static/artist_images/fisher.jpg",
+             "Australian tech house DJ known for energetic festival records."),
 
-            cursor.execute("INSERT INTO artists (name, image, about) VALUES (?, ?, ?)",
-            ("Vintage Culture",
-            "/static/artist_images/vintage-culture.jpg",
-            "Brazilian DJ blending deep house, melodic house, and festival-ready electronic music."))
+            ("John Summit", "/static/artist_images/john-summit.jpg",
+             "American producer combining tech house with festival energy."),
 
-            cursor.execute("INSERT INTO artists (name, image, about) VALUES (?, ?, ?)",
-            ("Disclosure",
-            "/static/artist_images/disclosure.jpg",
-            "British electronic duo combining garage, house, and soulful dance production."))
+            ("Dom Dolla", "/static/artist_images/dom-dolla.jpg",
+             "Australian house producer recognized for groovy club tracks."),
 
-            cursor.execute("INSERT INTO artists (name, image, about) VALUES (?, ?, ?)",
-            ("David Guetta",
-            "/static/artist_images/david-guetta.jpg",
-            "One of the most influential EDM producers, mixing house music with mainstream pop energy."))
+            ("Chris Lake", "/static/artist_images/chris-lake.jpg",
+             "British producer famous for groove-driven tech house."),
 
-            cursor.execute("INSERT INTO artists (name, image, about) VALUES (?, ?, ?)",
-            ("Robin Schulz",
-            "/static/artist_images/robin-schulz.jpg",
-            "German DJ famous for melodic deep house remixes and chill dance tracks."))
+            ("Mau P", "/static/artist_images/mau-p.jpg",
+             "Dutch DJ producing modern underground tech house."),
 
-            cursor.execute("INSERT INTO artists (name, image, about) VALUES (?, ?, ?)",
-            ("Purple Disco Machine",
-            "/static/artist_images/purple-disco-machine.jpg",
-            "German producer combining disco, funky house, and retro dance grooves."))
+            ("KREAM", "/static/artist_images/kream.jpg",
+             "Norwegian duo making melodic deep house music."),
 
-            cursor.execute("INSERT INTO artists (name, image, about) VALUES (?, ?, ?)",
-            ("Gorgon City",
-            "/static/artist_images/gorgon-city.jpg",
-            "UK electronic duo blending deep house, garage, and underground club influences."))
+            ("MEDUZA", "/static/artist_images/meduza.jpg",
+             "Italian trio known for emotional deep house crossover hits."),
 
-            cursor.execute("INSERT INTO artists (name, image, about) VALUES (?, ?, ?)",
-            ("Ben Hemsley",
-            "/static/artist_images/ben-hemsley.jpg",
-            "British DJ known for energetic trance-influenced house and rave-inspired sounds."))
+            ("Claptone", "/static/artist_images/claptone.jpg",
+             "Mysterious house DJ with melodic deep house style."),
 
-            cursor.execute("INSERT INTO artists (name, image, about) VALUES (?, ?, ?)",
-            ("Jamie Jones",
-            "/static/artist_images/jamie-jones.jpg",
-            "Influential house and tech house producer associated with underground club culture."))
-            
-            cursor.execute("INSERT INTO artists (name, image, about) VALUES (?, ?, ?)", ("Alan Walker","/static/artist_images/alan-walker.jpg","Norwegian DJ and producer known for melodic electronic music and cinematic house-inspired tracks."))
+            ("MK", "/static/artist_images/mk.jpg",
+             "Legendary American house producer and deep house pioneer."),
 
-            cursor.execute("INSERT INTO artists (name, image, about) VALUES (?, ?, ?)",
-            ("Kygo",
-            "/static/artist_images/kygo.jpg",
-            "Producer who popularized tropical house with soft piano melodies and relaxed summer vibes."))
+            ("Peggy Gou", "/static/artist_images/peggy-gou.jpg",
+             "South Korean DJ blending house and underground electronic sounds."),
 
-            cursor.execute("INSERT INTO artists (name, image, about) VALUES (?, ?, ?)",
-            ("Avicii",
-            "/static/artist_images/avicii.jpg",
-            "Legendary Swedish producer who blended progressive house with emotional songwriting and folk influences."))
+            ("CamelPhat", "/static/artist_images/camelphat.jpg",
+             "British duo producing melodic progressive house."),
 
-            cursor.execute("INSERT INTO artists (name, image, about) VALUES (?, ?, ?)",
-            ("Alesso",
-            "/static/artist_images/alesso.jpg",
-            "Swedish progressive house producer famous for euphoric festival anthems and melodic drops."))
+            ("Vintage Culture", "/static/artist_images/vintage-culture.jpg",
+             "Brazilian DJ blending melodic and deep house styles."),
 
-            cursor.execute("INSERT INTO artists (name, image, about) VALUES (?, ?, ?)",
-            ("Calvin Harris",
-            "/static/artist_images/calvin-harris.jpg",
-            "Scottish DJ and producer combining radio-friendly dance music with house and funk influences."))
+            ("Disclosure", "/static/artist_images/disclosure.jpg",
+             "British electronic duo mixing garage and house music."),
 
-            cursor.execute("INSERT INTO artists (name, image, about) VALUES (?, ?, ?)",
-            ("TheFatRat",
-            "/static/artist_images/thefatrat.jpg",
-            "Electronic music producer known for melodic EDM, gaming music, and uplifting house-inspired tracks."))
+            ("David Guetta", "/static/artist_images/david-guetta.jpg",
+             "Global EDM producer combining house and pop music."),
 
-            cursor.execute("INSERT INTO artists (name, image, about) VALUES (?, ?, ?)",
-            ("Tobu",
-            "/static/artist_images/tobu.jpg",
-            "Independent electronic producer known for melodic progressive house and uplifting EDM instrumentals from Latvia."))
+            ("Robin Schulz", "/static/artist_images/robin-schulz.jpg",
+             "German producer famous for melodic tropical house."),
 
-            cursor.execute("INSERT INTO artists (name, image, about) VALUES (?, ?, ?)",
-            ("Vicetone",
-            "/static/artist_images/vicetone.jpg",
-            "Dutch electronic duo creating energetic progressive house and melodic festival music."))
-            
+            ("Purple Disco Machine", "/static/artist_images/purple-disco-machine.jpg",
+             "Disco-inspired funky house producer from Germany."),
 
-        # TRACKS
-        cursor.execute("SELECT COUNT(*) FROM tracks")
-        if cursor.fetchone()[0] == 0:
+            ("Gorgon City", "/static/artist_images/gorgon-city.jpg",
+             "UK duo blending deep house and garage."),
 
-            tracks_data = [
+            ("Ben Hemsley", "/static/artist_images/ben-hemsley.jpg",
+             "British rave-inspired house producer."),
 
-                # CHICAGO HOUSE
-                ("Can You Feel It", "https://www.youtube.com/watch?v=-Xgq0tFh1Y8", 20, 1),
-                ("Move Your Body", "https://www.youtube.com/watch?v=QAR8cq5Bl94", 20, 1),
-                ("Your Love", "https://www.youtube.com/watch?v=LOLE1YE_oFQ", 18, 1),
+            ("Jamie Jones", "/static/artist_images/jamie-jones.jpg",
+             "Influential underground house and tech house DJ."),
 
-                # ACID HOUSE
-                ("Acid Tracks", "https://www.youtube.com/watch?v=igNBeo3QSqc", 20, 2),
-                ("Voodoo Ray", "https://www.youtube.com/watch?v=7W5dDq0xR6E", 18, 2),
-                ("Windowlicker", "https://www.youtube.com/watch?v=UBS4Gi1y_nc", 11, 2),
+            ("Alan Walker", "/static/artist_images/alan-walker.jpg",
+             "Norwegian electronic producer known for melodic EDM."),
 
-                # DEEP HOUSE
-                ("Piece Of Your Heart", "https://www.youtube.com/watch?v=RhmUnk454MA", 8, 3),
-                ("Lose Control", "https://www.youtube.com/watch?v=NAj26rVWK14", 8, 3),
-                ("Paradise", "https://www.youtube.com/watch?v=VlM8BXylDoQ", 8, 3),
-                ("Taped Up Heart", "https://www.youtube.com/watch?v=cj4A9QkJ4uA", 7, 3),
-                ("Prayer in C", "https://www.youtube.com/watch?v=fiore9Z5iUg", 16, 3),
+            ("Kygo", "/static/artist_images/kygo.jpg",
+             "Producer who popularized tropical house globally."),
 
-                # PROGRESSIVE HOUSE
-                ("Wake Me Up", "https://www.youtube.com/watch?v=IcrbM1l_BoI", 23, 4),
-                ("Levels", "https://www.youtube.com/watch?v=_ovdm2yX4MA", 23, 4),
-                ("Heroes", "https://www.youtube.com/watch?v=a7SouU3ECpU", 24, 4),
-                ("Under Control", "https://www.youtube.com/watch?v=8Ey7n984XbE", 24, 4),
-                ("Calling", "https://www.youtube.com/watch?v=8eqcPsA_9sk", 31, 4),
+            ("Avicii", "/static/artist_images/avicii.jpg",
+             "Legendary Swedish progressive house producer."),
 
-                # FRENCH HOUSE
-                ("One More Time", "https://www.youtube.com/watch?v=FGBhQbmPwH8", 29, 5),
-                ("Around The World", "https://www.youtube.com/watch?v=dwDns8x3Jb4", 29, 5),
-                ("Get Lucky", "https://www.youtube.com/watch?v=5NV6Rdv1a3I", 29, 5),
+            ("Alesso", "/static/artist_images/alesso.jpg",
+             "Swedish producer famous for progressive house anthems."),
 
-                # FUNKY HOUSE
-                ("Hypnotized", "https://www.youtube.com/watch?v=J5fE8xVjFvY", 17, 6),
-                ("Fireworks", "https://www.youtube.com/watch?v=8x-M7AkTvrQ", 17, 6),
-                ("Dished", "https://www.youtube.com/watch?v=gwO0zJmQcvY", 5, 6),
+            ("Calvin Harris", "/static/artist_images/calvin-harris.jpg",
+             "Scottish producer combining dance and funk influences."),
 
-                # TRIBAL HOUSE
-                ("Cola", "https://www.youtube.com/watch?v=qke-jOUqSXU", 12, 7),
-                ("Panic Room", "https://www.youtube.com/watch?v=R3JtQq9tG9c", 12, 7),
-                ("No Eyes", "https://www.youtube.com/watch?v=tK7Vv0yS2B4", 9, 7),
+            ("TheFatRat", "/static/artist_images/thefatrat.jpg",
+             "Electronic producer known for melodic EDM and gaming music."),
 
-                # AFRO HOUSE
-                ("Drive", "https://www.youtube.com/watch?v=o4A1dd7JHfA", 27, 8),
-                ("Jerusalema", "https://www.youtube.com/watch?v=fCZVL_8D048", 27, 8),
-                ("Your Voice", "https://www.youtube.com/watch?v=W3Bq4SQkG2Q", 27, 8),
+            ("Tobu", "/static/artist_images/tobu.jpg",
+             "Latvian melodic progressive house producer."),
 
-                # TROPICAL HOUSE
-                ("Firestone", "https://www.youtube.com/watch?v=9Sc-ir2UwGU", 22, 9),
-                ("Stole The Show", "https://www.youtube.com/watch?v=BgfcToAjfdc", 22, 9),
-                ("It Ain't Me", "https://www.youtube.com/watch?v=u3VTKvdAuIY", 22, 9),
-                ("Sugar", "https://www.youtube.com/watch?v=bvC_0foemLY", 16, 9),
+            ("Vicetone", "/static/artist_images/vicetone.jpg",
+             "Dutch duo making energetic progressive house."),
 
-                # ELECTRO HOUSE
-                ("Titanium", "https://www.youtube.com/watch?v=JRfuAukYTKg", 15, 10),
-                ("Booyah", "https://www.youtube.com/watch?v=QCyIY10KBnk", 4, 10),
-                ("Animals", "https://www.youtube.com/watch?v=gCYcHz2k5x0", 15, 10),
+            ("Swedish House Mafia", "/static/artist_images/swedish-house-mafia.jpg",
+             "Legendary Swedish progressive house trio."),
 
-                # BASS HOUSE
-                ("Losing It", "https://www.youtube.com/watch?v=o3WdLtpWM_c", 2, 11),
-                ("Atmosphere", "https://www.youtube.com/watch?v=sA6OknupuHM", 2, 11),
-                ("Turn Off The Lights", "https://www.youtube.com/watch?v=8EJ3zbKTWQ8", 5, 11),
+            ("Kaskade", "/static/artist_images/kaskade.jpg",
+             "American deep and melodic house producer."),
 
-                # SLAP HOUSE
-                ("Breaking Me", "https://www.youtube.com/watch?v=jIoEaTN7GGo", 21, 12),
-                ("Head & Heart", "https://www.youtube.com/watch?v=CRuOOxF-ENQ", 15, 12),
-                ("The Business", "https://www.youtube.com/watch?v=nCg3ufihKyU", 6, 12),
+            ("Black Coffee", "/static/artist_images/black-coffee.jpg",
+             "South African Afro house pioneer."),
 
-                # FUTURE HOUSE
-                ("Gecko Overdrive", "https://www.youtube.com/watch?v=rtOvBOTyX00", 28, 13),
-                ("Koala", "https://www.youtube.com/watch?v=0tLq2WLFY7c", 28, 13),
-                ("Turn Me On", "https://www.youtube.com/watch?v=YVPrCdChOAk", 30, 13),
+            ("Tchami", "/static/artist_images/tchami.jpg",
+             "French future house producer."),
 
-                # GARAGE HOUSE
-                ("Latch", "https://www.youtube.com/watch?v=93ASUImTedo", 14, 14),
-                ("White Noise", "https://www.youtube.com/watch?v=bkk2H3Ztrfk", 14, 14),
-                ("Omen", "https://www.youtube.com/watch?v=fB63ztKnGvo", 14, 14),
+            ("Oliver Heldens", "/static/artist_images/oliver-heldens.jpg",
+             "Dutch future house DJ and producer."),
 
-                # LO-FI HOUSE
-                ("Jungle", "https://www.youtube.com/watch?v=zBp7KBmgsdU", 1, 15),
-                ("Marea", "https://www.youtube.com/watch?v=l4UkYBr1NnA", 1, 15),
-                ("Billie", "https://www.youtube.com/watch?v=c0-hvjV2A5Y", 1, 15),
+            ("Daft Punk", "/static/artist_images/daft-punk.jpg",
+             "Iconic French electronic music duo."),
 
-                # MINIMAL HOUSE
-                ("Drugs From Amsterdam", "https://www.youtube.com/watch?v=2l7P8rG4bwY", 6, 16),
-                ("Metro", "https://www.youtube.com/watch?v=gmYx0dS1Y7k", 6, 16),
-                ("Transmission", "https://www.youtube.com/watch?v=4QO4wX975mY", 3, 16),
+            ("Lane 8", "/static/artist_images/lane8.jpg",
+             "Melodic deep and progressive house producer."),
 
-                # LATIN HOUSE
-                ("Pepas", "https://www.youtube.com/watch?v=y8trd3gjJt0", 15, 17),
-                ("Mi Gente", "https://www.youtube.com/watch?v=wnJ6LuUFpMo", 17, 17),
-                ("Con Calma", "https://www.youtube.com/watch?v=DiItGE3eAyQ", 15, 17)
+            ("Riton", "/static/artist_images/riton.jpg",
+             "British electronic producer known for dance crossover tracks.")
 
-            ]
+        ]
 
-            for track in tracks_data:
-                cursor.execute("""
+        cursor.executemany(
+            "INSERT INTO artists (name, image, about) VALUES (?, ?, ?)",
+            artists
+        )
+
+    # =========================
+    # CREATE MAPS
+    # =========================
+
+    cursor.execute("SELECT id, name FROM artists")
+    artist_map = {name: id for id, name in cursor.fetchall()}
+
+    cursor.execute("SELECT id, name FROM genres")
+    genre_map = {name: id for id, name in cursor.fetchall()}
+
+    # =========================
+    # TRACKS
+    # =========================
+
+    cursor.execute("SELECT COUNT(*) FROM tracks")
+
+    if cursor.fetchone()[0] == 0:
+
+        tracks = [
+
+            # DEEP HOUSE
+            ("Piece Of Your Heart", "https://www.youtube.com/watch?v=KWjV25q34Hw", "MEDUZA", "Deep House"),
+            ("Lose Control", "https://www.youtube.com/watch?v=-3P2USPFDcE", "MEDUZA", "Deep House"),
+            ("Cola", "https://www.youtube.com/watch?v=qke-jOUqSXU", "CamelPhat", "Deep House"),
+            ("No Eyes", "https://www.youtube.com/watch?v=CXyVMvlS1NU", "Claptone", "Deep House"),
+            ("Taped Up Heart", "https://www.youtube.com/watch?v=1hhSxCme8EI", "KREAM", "Deep House"),
+
+            # PROGRESSIVE HOUSE
+            ("Wake Me Up", "https://www.youtube.com/watch?v=IcrbM1l_BoI", "Avicii", "Progressive House"),
+            ("Levels", "https://www.youtube.com/watch?v=_ovdm2yX4MA", "Avicii", "Progressive House"),
+            ("Heroes", "https://www.youtube.com/watch?v=a7SouU3ECpU", "Alesso", "Progressive House"),
+            ("Under Control", "https://www.youtube.com/watch?v=yZqmarGShxg", "Alesso", "Progressive House"),
+            ("Calling", "https://www.youtube.com/watch?v=9G1I16gJBvU", "Swedish House Mafia", "Progressive House"),
+
+            # TROPICAL HOUSE
+            ("Firestone", "https://www.youtube.com/watch?v=9Sc-ir2UwGU", "Kygo", "Tropical House"),
+            ("Stole The Show", "https://www.youtube.com/watch?v=BgfcToAjfdc", "Kygo", "Tropical House"),
+            ("It Ain't Me", "https://www.youtube.com/watch?v=u3VTKvdAuIY", "Kygo", "Tropical House"),
+            ("Sugar", "https://www.youtube.com/watch?v=bvC_0foemLY", "Robin Schulz", "Tropical House"),
+            ("Prayer in C", "https://www.youtube.com/watch?v=fiore9Z5iUg", "Robin Schulz", "Tropical House"),
+
+            # FUTURE HOUSE
+            ("Gecko", "https://www.youtube.com/watch?v=jjx2oc2NRzA", "Oliver Heldens", "Future House"),
+            ("Turn Me On", "https://www.youtube.com/watch?v=ng3XUABcwDw", "Riton", "Future House"),
+            ("Saving Up", "https://www.youtube.com/watch?v=yAl6yiQHHNw", "Dom Dolla", "Future House"),
+            ("More Baby", "https://www.youtube.com/watch?v=KxZ_W9zX8ho", "Chris Lake", "Future House"),
+            ("Piece of Me", "https://www.youtube.com/watch?v=3HCtJ5m96YE", "MK", "Future House"),
+
+            # BASS HOUSE
+            ("Losing It", "https://www.youtube.com/watch?v=o3WdLtpWM_c", "FISHER", "Bass House"),
+            ("You Little Beauty", "https://www.youtube.com/watch?v=X4xF5ymdQG8", "FISHER", "Bass House"),
+            ("Atmosphere", "https://www.youtube.com/watch?v=MlwBZ2MSNtE", "FISHER", "Bass House"),
+            ("Turn Off The Lights", "https://www.youtube.com/watch?v=E_wxPpRSgho", "Chris Lake", "Bass House"),
+            ("Beggin", "https://www.youtube.com/watch?v=x8mdqMcOAUo", "Chris Lake", "Bass House"),
+
+            # SLAP HOUSE
+            ("Head & Heart", "https://www.youtube.com/watch?v=CRuOOxF-ENQ", "Joel Corry", "Slap House"),
+            ("Breaking Me", "https://www.youtube.com/watch?v=jIoEaTN7GGo", "Riton", "Slap House"),
+            ("Paradise", "https://www.youtube.com/watch?v=e7HBypw4lhY", "MEDUZA", "Slap House"),
+            ("In Your Eyes", "https://www.youtube.com/watch?v=mDLiAs5k1oI", "Robin Schulz", "Slap House"),
+            ("The Business", "https://www.youtube.com/watch?v=nCg3ufihKyU", "Tiësto", "Slap House"),
+
+            # GARAGE HOUSE
+            ("Latch", "https://www.youtube.com/watch?v=93ASUImTedo", "Disclosure", "Garage House"),
+            ("White Noise", "https://www.youtube.com/watch?v=bkk2H3Ztrfk", "Disclosure", "Garage House"),
+            ("Omen", "https://www.youtube.com/watch?v=fB63ztKnGvo", "Disclosure", "Garage House"),
+            ("Help Me Lose My Mind", "https://www.youtube.com/watch?v=XJY66qPDeeQ", "Disclosure", "Garage House"),
+            ("You & Me", "https://www.youtube.com/watch?v=OUkkaqSNduU", "Disclosure", "Garage House"),
+
+            # AFRO HOUSE
+            ("Drive", "https://www.youtube.com/watch?v=32HANv-bdJs", "Black Coffee", "Afro House"),
+            ("Your Eyes", "https://www.youtube.com/watch?v=PPUyHWWrQzE", "Black Coffee", "Afro House"),
+            ("Slow Down", "https://www.youtube.com/watch?v=76mkEfxxIl0", "Vintage Culture", "Afro House"),
+            ("Free", "https://www.youtube.com/watch?v=2_a2ZUOJiMs", "Vintage Culture", "Afro House"),
+            ("Human", "https://www.youtube.com/watch?v=6mn7OonJfk4", "John Summit", "Afro House"),
+
+            # ELECTRO HOUSE
+            ("Titanium", "https://www.youtube.com/watch?v=JRfuAukYTKg", "David Guetta", "Electro House"),
+            ("Animals", "https://www.youtube.com/watch?v=gCYcHz2k5x0", "Martin Garrix", "Electro House"),
+            ("Booyah", "https://www.youtube.com/watch?v=QCyIY10KBnk", "Showtek", "Electro House"),
+            ("Tsunami", "https://www.youtube.com/watch?v=0EWbonj7f18", "DVBBS", "Electro House"),
+            ("Play Hard", "https://www.youtube.com/watch?v=5dbEhBKGOtY", "David Guetta", "Electro House")
+
+        ]
+
+        for title, link, artist_name, genre_name in tracks:
+
+            if artist_name not in artist_map:
+                continue
+
+            if genre_name not in genre_map:
+                continue
+
+            cursor.execute(
+                """
                 INSERT INTO tracks (title, youtube_link, artist_id, genre_id)
                 VALUES (?, ?, ?, ?)
-                """, track)
+                """,
+                (
+                    title,
+                    link,
+                    artist_map[artist_name],
+                    genre_map[genre_name]
+                )
+            )
 
+    # =========================
+    # PLAYLISTS
+    # =========================
 
-        # PLAYLISTS
-        cursor.execute("SELECT COUNT(*) FROM playlists")
-        if cursor.fetchone()[0] == 0:
+    cursor.execute("SELECT COUNT(*) FROM playlists")
 
-            playlists_data = [
-                ("Chicago House Essentials", 1),
-                ("Acid House Classics", 2),
-                ("Deep House Vibes", 3),
-                ("Progressive House Journey", 4),
-                ("French House Grooves", 5),
-                ("Funky House Party", 6),
-                ("Tribal House Energy", 7),
-                ("Afro House Sunset", 8),
-                ("Tropical House Chill", 9),
-                ("Electro House Festival", 10),
-                ("Bass House Madness", 11),
-                ("Slap House Hits", 12),
-                ("Future House Anthems", 13),
-                ("Garage House Selection", 14),
-                ("Lo-Fi House Nights", 15),
-                ("Minimal House Flow", 16),
-                ("Latin House Rhythm", 17)
-            ]
+    if cursor.fetchone()[0] == 0:
 
-            for playlist in playlists_data:
-                cursor.execute("""
-                INSERT INTO playlists (name, genre_id)
-                VALUES (?, ?)
-                """, playlist)
+        playlists = [
 
-        conn.commit()
-        conn.close()
+            ("Deep House Vibes", "Deep House"),
+            ("Progressive House Festival", "Progressive House"),
+            ("Tropical Summer", "Tropical House"),
+            ("Future House Energy", "Future House"),
+            ("Bass House Madness", "Bass House"),
+            ("Garage House Essentials", "Garage House"),
+            ("Afro House Sunset", "Afro House"),
+            ("Electro House Anthems", "Electro House")
+
+        ]
+
+        for playlist_name, genre_name in playlists:
+
+            cursor.execute(
+                "INSERT INTO playlists (name, genre_id) VALUES (?, ?)",
+                (
+                    playlist_name,
+                    genre_map[genre_name]
+                )
+            )
+
+    conn.commit()
+    conn.close()
+
 
 seed_data()
 
