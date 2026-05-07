@@ -1,34 +1,37 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1>Artists</h1>
+<div class="container">
+    <h1>Artists</h1>
 
-<form method="POST" action="/add_artist">
-    <input type="text" name="name" placeholder="Artist name" required>
-    <input type="text" name="description" placeholder="Description">
-    <input type="text" name="image" placeholder="Image URL">
-    <button type="submit">Add</button>
-</form>
+    <form method="POST" action="/add_artist">
+        <input type="text" name="name" placeholder="Artist name" required>
+        <input type="text" name="description" placeholder="Description">
+        <input type="text" name="image" placeholder="Image URL">
+        <button type="submit">Add</button>
+    </form>
 
-<hr>
+    <hr>
 
-<ul>
-    <div class="card-container">
-    {% for artist in artists %}
-        <div class="card">
+    <ul>
+        <div class="card-container">
+        {% for artist in artists %}
+            <div class="card">
 
-            <h3>{{ artist[1] }}</h3>
+                <h3>{{ artist[1] }}</h3>
 
-            <img src="{{ artist[2] }}" class="artist-img">
+                <img src="{{ artist[2] }}" class="artist-img">
 
-            <p>{{ artist[3] }}</p>
+                <p>{{ artist[3] }}</p>
 
-            <a class="btn delete" href="/delete_artist/{{ artist[0] }}">Delete</a>
-            <a class="btn edit" href="/edit_artist/{{ artist[0] }}">Edit</a>
+                <a class="btn delete" href="/delete_artist/{{ artist[0] }}">Delete</a>
+                <a class="btn edit" href="/edit_artist/{{ artist[0] }}">Edit</a>
 
+            </div>
+        {% endfor %}
         </div>
-    {% endfor %}
-    </div>
-</ul>
+    </ul>
+</div>
+
 
 {% endblock %}

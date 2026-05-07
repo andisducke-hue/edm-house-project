@@ -2,8 +2,6 @@ body {
     background-color: #0a0a0a;
     color: white;
     font-family: Arial, sans-serif;
-    max-width: 1000px;
-    margin: auto;
 }
 
 nav {
@@ -132,4 +130,140 @@ footer a {
 
 footer a:hover {
     color: #fff;
+}
+
+/* RESET */
+* {
+    box-sizing: border-box;
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+    font-family: Arial, sans-serif;
+}
+
+textarea {
+    width: 100%;
+    min-height: 120px;
+    padding: 10px;
+    border-radius: 6px;
+    margin-bottom: 10px;
+    resize: vertical;
+}
+
+/* IMAGES */
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* CONTAINERS */
+.container {
+    width: 100%;
+    max-width: 1200px;
+    margin: auto;
+    padding: 15px;
+}
+
+/* NAVBAR */
+nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 15px;
+}
+
+nav a {
+    text-decoration: none;
+    padding: 10px 14px;
+}
+
+/* FORMS */
+form {
+    width: 100%;
+}
+
+input,
+select,
+textarea,
+button {
+    width: 100%;
+    max-width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    font-size: 16px;
+}
+
+/* TABLES */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    display: block;
+    overflow-x: auto;
+}
+
+td, th {
+    padding: 10px;
+    text-align: left;
+}
+
+/* CARDS / LISTS */
+.card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+}
+
+/* YOUTUBE IFRAME */
+iframe {
+    width: 100%;
+    max-width: 100%;
+}
+
+/* MOBILE */
+@media (max-width: 768px) {
+
+    h1 {
+        font-size: 28px;
+    }
+
+    h2 {
+        font-size: 22px;
+    }
+
+    nav {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    nav a {
+        width: 100%;
+        text-align: center;
+    }
+
+    table {
+        font-size: 14px;
+    }
+
+    button {
+        width: 100%;
+    }
+    .track-container,
+    .card-container {
+        justify-content: center;
+    }
+
+    .track-card,
+    .card {
+        max-width: 100%;
+    }
+}
+
+.track-card,
+.card {
+    width: 100%;
+    max-width: 300px;
 }

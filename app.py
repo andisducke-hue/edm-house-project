@@ -120,14 +120,23 @@ def edit_artist(id):
 
     if request.method == "POST":
         name = request.form["name"]
+        image = request.form["image"]
+        about = request.form["about"]
 
-        cursor.execute("UPDATE artists SET name=? WHERE id=?", (name, id))
+        cursor.execute("""
+        UPDATE artists
+        SET name=?, image=?, about=?
+        WHERE id=?
+        """, (name, image, about, id))
+
         conn.commit()
         conn.close()
+
         return redirect("/artists")
 
     cursor.execute("SELECT * FROM artists WHERE id=?", (id,))
     artist = cursor.fetchone()
+
     conn.close()
 
     return render_template("edit_artist.html", artist=artist)
@@ -365,7 +374,7 @@ def seed_data():
         cursor.execute("SELECT COUNT(*) FROM genres")
         if cursor.fetchone()[0] == 0:
             cursor.execute("INSERT INTO genres (name, description) VALUES (?, ?)",
-                        ("Chocago House", "The original house style from Chicago, built on drum machines, simple basslines, and dancefloor-focused grooves"))
+                        ("Chicago House", "The original house style from Chicago, built on drum machines, simple basslines, and dancefloor-focused grooves"))
             cursor.execute("INSERT INTO genres (name, description) VALUES (?, ?)",
                         ("Acid House", "A hypnotic house style with squelchy TB-303 basslines, repetitive patterns, and a psychedelic club feel."))
             cursor.execute("INSERT INTO genres (name, description) VALUES (?, ?)",
@@ -544,263 +553,137 @@ def seed_data():
         # TRACKS
         cursor.execute("SELECT COUNT(*) FROM tracks")
         if cursor.fetchone()[0] == 0:
-            cursor.execute("""
-            INSERT INTO tracks (title, youtube_link, artist_id, genre_id)
-            VALUES (?, ?, ?, ?)
-            """, ("adore u", "https://www.youtube.com/watch?v=3aFF09jjZwk", 1, 1))
 
-            cursor.execute("""
-            INSERT INTO tracks (title, youtube_link, artist_id, genre_id)
-            VALUES (?, ?, ?, ?)
-            """, ("Delilah (pull me out of this)", "https://www.youtube.com/watch?v=8dQw6jG5l8I", 1, 1))
+            tracks_data = [
 
-            cursor.execute("""
-            INSERT INTO tracks (title, youtube_link, artist_id, genre_id)
-            VALUES (?, ?, ?, ?)
-            """, ("Jungle", "https://www.youtube.com/watch?v=zBp7KBmgsdU", 1, 1))
+                # CHICAGO HOUSE
+                ("Can You Feel It", "https://www.youtube.com/watch?v=-Xgq0tFh1Y8", 20, 1),
+                ("Move Your Body", "https://www.youtube.com/watch?v=QAR8cq5Bl94", 20, 1),
+                ("Your Love", "https://www.youtube.com/watch?v=LOLE1YE_oFQ", 18, 1),
 
-            cursor.execute("""
-            INSERT INTO tracks (title, youtube_link, artist_id, genre_id)
-            VALUES (?, ?, ?, ?)
-            """, ("Losing It", "https://www.youtube.com/watch?v=o3WdLtpWM_c", 2, 2))
+                # ACID HOUSE
+                ("Acid Tracks", "https://www.youtube.com/watch?v=igNBeo3QSqc", 20, 2),
+                ("Voodoo Ray", "https://www.youtube.com/watch?v=7W5dDq0xR6E", 18, 2),
+                ("Windowlicker", "https://www.youtube.com/watch?v=UBS4Gi1y_nc", 11, 2),
 
-            cursor.execute("""
-            INSERT INTO tracks (title, youtube_link, artist_id, genre_id)
-            VALUES (?, ?, ?, ?)
-            """, ("You Little Beauty", "https://www.youtube.com/watch?v=4bP6mL5p2i4", 2, 2))
+                # DEEP HOUSE
+                ("Piece Of Your Heart", "https://www.youtube.com/watch?v=RhmUnk454MA", 8, 3),
+                ("Lose Control", "https://www.youtube.com/watch?v=NAj26rVWK14", 8, 3),
+                ("Paradise", "https://www.youtube.com/watch?v=VlM8BXylDoQ", 8, 3),
+                ("Taped Up Heart", "https://www.youtube.com/watch?v=cj4A9QkJ4uA", 7, 3),
+                ("Prayer in C", "https://www.youtube.com/watch?v=fiore9Z5iUg", 16, 3),
 
-            cursor.execute("""
-            INSERT INTO tracks (title, youtube_link, artist_id, genre_id)
-            VALUES (?, ?, ?, ?)
-            """, ("Atmosphere", "https://www.youtube.com/watch?v=sA6OknupuHM", 2, 2))
+                # PROGRESSIVE HOUSE
+                ("Wake Me Up", "https://www.youtube.com/watch?v=IcrbM1l_BoI", 23, 4),
+                ("Levels", "https://www.youtube.com/watch?v=_ovdm2yX4MA", 23, 4),
+                ("Heroes", "https://www.youtube.com/watch?v=a7SouU3ECpU", 24, 4),
+                ("Under Control", "https://www.youtube.com/watch?v=8Ey7n984XbE", 24, 4),
+                ("Calling", "https://www.youtube.com/watch?v=8eqcPsA_9sk", 31, 4),
 
-            cursor.execute("""
-            INSERT INTO tracks (title, youtube_link, artist_id, genre_id)
-            VALUES (?, ?, ?, ?)
-            """, ("Where You Are", "https://www.youtube.com/watch?v=to8s9G2pYw8", 3, 2))
+                # FRENCH HOUSE
+                ("One More Time", "https://www.youtube.com/watch?v=FGBhQbmPwH8", 29, 5),
+                ("Around The World", "https://www.youtube.com/watch?v=dwDns8x3Jb4", 29, 5),
+                ("Get Lucky", "https://www.youtube.com/watch?v=5NV6Rdv1a3I", 29, 5),
 
-            cursor.execute("""
-            INSERT INTO tracks (title, youtube_link, artist_id, genre_id)
-            VALUES (?, ?, ?, ?)
-            """, ("Go Back", "https://www.youtube.com/watch?v=4QO4wX975mY", 3, 2))
+                # FUNKY HOUSE
+                ("Hypnotized", "https://www.youtube.com/watch?v=J5fE8xVjFvY", 17, 6),
+                ("Fireworks", "https://www.youtube.com/watch?v=8x-M7AkTvrQ", 17, 6),
+                ("Dished", "https://www.youtube.com/watch?v=gwO0zJmQcvY", 5, 6),
 
-            cursor.execute("""
-            INSERT INTO tracks (title, youtube_link, artist_id, genre_id)
-            VALUES (?, ?, ?, ?)
-            """, ("Human", "https://www.youtube.com/watch?v=2u8x7A9Qhsk", 3, 1))
+                # TRIBAL HOUSE
+                ("Cola", "https://www.youtube.com/watch?v=qke-jOUqSXU", 12, 7),
+                ("Panic Room", "https://www.youtube.com/watch?v=R3JtQq9tG9c", 12, 7),
+                ("No Eyes", "https://www.youtube.com/watch?v=tK7Vv0yS2B4", 9, 7),
 
-            cursor.execute("""
-            INSERT INTO tracks (title, youtube_link, artist_id, genre_id)
-            VALUES (?, ?, ?, ?)
-            """, ("Saving Up", "https://www.youtube.com/watch?v=7YvAYIJSSZY", 4, 2))
+                # AFRO HOUSE
+                ("Drive", "https://www.youtube.com/watch?v=o4A1dd7JHfA", 27, 8),
+                ("Jerusalema", "https://www.youtube.com/watch?v=fCZVL_8D048", 27, 8),
+                ("Your Voice", "https://www.youtube.com/watch?v=W3Bq4SQkG2Q", 27, 8),
 
-            cursor.execute("""
-            INSERT INTO tracks (title, youtube_link, artist_id, genre_id)
-            VALUES (?, ?, ?, ?)
-            """, ("Rhyme Dust", "https://www.youtube.com/watch?v=7m_xQfF6wQQ", 4, 2))
+                # TROPICAL HOUSE
+                ("Firestone", "https://www.youtube.com/watch?v=9Sc-ir2UwGU", 22, 9),
+                ("Stole The Show", "https://www.youtube.com/watch?v=BgfcToAjfdc", 22, 9),
+                ("It Ain't Me", "https://www.youtube.com/watch?v=u3VTKvdAuIY", 22, 9),
+                ("Sugar", "https://www.youtube.com/watch?v=bvC_0foemLY", 16, 9),
 
-            cursor.execute("""
-            INSERT INTO tracks (title, youtube_link, artist_id, genre_id)
-            VALUES (?, ?, ?, ?)
-            """, ("girl$", "https://www.youtube.com/watch?v=6Q5xqNkCk7w", 4, 1))
+                # ELECTRO HOUSE
+                ("Titanium", "https://www.youtube.com/watch?v=JRfuAukYTKg", 15, 10),
+                ("Booyah", "https://www.youtube.com/watch?v=QCyIY10KBnk", 4, 10),
+                ("Animals", "https://www.youtube.com/watch?v=gCYcHz2k5x0", 15, 10),
 
-            cursor.execute("""
-            INSERT INTO tracks (title, youtube_link, artist_id, genre_id)
-            VALUES (?, ?, ?, ?)
-            """, ("Turn Off The Lights", "https://www.youtube.com/watch?v=8EJ3zbKTWQ8", 5, 2))
+                # BASS HOUSE
+                ("Losing It", "https://www.youtube.com/watch?v=o3WdLtpWM_c", 2, 11),
+                ("Atmosphere", "https://www.youtube.com/watch?v=sA6OknupuHM", 2, 11),
+                ("Turn Off The Lights", "https://www.youtube.com/watch?v=8EJ3zbKTWQ8", 5, 11),
 
-            cursor.execute("""
-            INSERT INTO tracks (title, youtube_link, artist_id, genre_id)
-            VALUES (?, ?, ?, ?)
-            """, ("Beggin'", "https://www.youtube.com/watch?v=6iD1n8H6JxQ", 5, 2))
+                # SLAP HOUSE
+                ("Breaking Me", "https://www.youtube.com/watch?v=jIoEaTN7GGo", 21, 12),
+                ("Head & Heart", "https://www.youtube.com/watch?v=CRuOOxF-ENQ", 15, 12),
+                ("The Business", "https://www.youtube.com/watch?v=nCg3ufihKyU", 6, 12),
 
-            cursor.execute("""
-            INSERT INTO tracks (title, youtube_link, artist_id, genre_id)
-            VALUES (?, ?, ?, ?)
-            """, ("More Baby", "https://www.youtube.com/watch?v=6fYw3jM5T3Q", 5, 1))
+                # FUTURE HOUSE
+                ("Gecko Overdrive", "https://www.youtube.com/watch?v=rtOvBOTyX00", 28, 13),
+                ("Koala", "https://www.youtube.com/watch?v=0tLq2WLFY7c", 28, 13),
+                ("Turn Me On", "https://www.youtube.com/watch?v=YVPrCdChOAk", 30, 13),
 
-            cursor.execute("""
-            INSERT INTO tracks (title, youtube_link, artist_id, genre_id)
-            VALUES (?, ?, ?, ?)
-            """, ("Drugs From Amsterdam", "https://www.youtube.com/watch?v=2l7P8rG4bwY", 6, 2))
+                # GARAGE HOUSE
+                ("Latch", "https://www.youtube.com/watch?v=93ASUImTedo", 14, 14),
+                ("White Noise", "https://www.youtube.com/watch?v=bkk2H3Ztrfk", 14, 14),
+                ("Omen", "https://www.youtube.com/watch?v=fB63ztKnGvo", 14, 14),
 
-            cursor.execute("""
-            INSERT INTO tracks (title, youtube_link, artist_id, genre_id)
-            VALUES (?, ?, ?, ?)
-            """, ("Gimme That Bounce", "https://www.youtube.com/watch?v=Bc4t3lQ2f8Q", 6, 2))
+                # LO-FI HOUSE
+                ("Jungle", "https://www.youtube.com/watch?v=zBp7KBmgsdU", 1, 15),
+                ("Marea", "https://www.youtube.com/watch?v=l4UkYBr1NnA", 1, 15),
+                ("Billie", "https://www.youtube.com/watch?v=c0-hvjV2A5Y", 1, 15),
 
-            cursor.execute("""
-            INSERT INTO tracks (title, youtube_link, artist_id, genre_id)
-            VALUES (?, ?, ?, ?)
-            """, ("Metro", "https://www.youtube.com/watch?v=gmYx0dS1Y7k", 6, 1))
+                # MINIMAL HOUSE
+                ("Drugs From Amsterdam", "https://www.youtube.com/watch?v=2l7P8rG4bwY", 6, 16),
+                ("Metro", "https://www.youtube.com/watch?v=gmYx0dS1Y7k", 6, 16),
+                ("Transmission", "https://www.youtube.com/watch?v=4QO4wX975mY", 3, 16),
 
-            cursor.execute("""
-            INSERT INTO tracks (title, youtube_link, artist_id, genre_id)
-            VALUES (?, ?, ?, ?)
-            """, ("Taped Up Heart", "https://www.youtube.com/watch?v=cj4A9QkJ4uA", 7, 1))
+                # LATIN HOUSE
+                ("Pepas", "https://www.youtube.com/watch?v=y8trd3gjJt0", 15, 17),
+                ("Mi Gente", "https://www.youtube.com/watch?v=wnJ6LuUFpMo", 17, 17),
+                ("Con Calma", "https://www.youtube.com/watch?v=DiItGE3eAyQ", 15, 17)
 
-            cursor.execute("""
-            INSERT INTO tracks (title, youtube_link, artist_id, genre_id)
-            VALUES (?, ?, ?, ?)
-            """, ("Decisions", "https://www.youtube.com/watch?v=d3hAnAnJwyU", 7, 1))
+            ]
 
-            cursor.execute("""
-            INSERT INTO tracks (title, youtube_link, artist_id, genre_id)
-            VALUES (?, ?, ?, ?)
-            """, ("Sweat", "https://www.youtube.com/watch?v=4mBf8S2L7dY", 7, 2))
+            for track in tracks_data:
+                cursor.execute("""
+                INSERT INTO tracks (title, youtube_link, artist_id, genre_id)
+                VALUES (?, ?, ?, ?)
+                """, track)
 
-            cursor.execute("""
-            INSERT INTO tracks (title, youtube_link, artist_id, genre_id)
-            VALUES (?, ?, ?, ?)
-            """, ("Piece Of Your Heart", "https://www.youtube.com/watch?v=RhmUnk454MA", 8, 1))
-
-            cursor.execute("""
-            INSERT INTO tracks (title, youtube_link, artist_id, genre_id)
-            VALUES (?, ?, ?, ?)
-            """, ("Lose Control", "https://www.youtube.com/watch?v=NAj26rVWK14", 8, 1))
-
-            cursor.execute("""
-            INSERT INTO tracks (title, youtube_link, artist_id, genre_id)
-            VALUES (?, ?, ?, ?)
-            """, ("Paradise", "https://www.youtube.com/watch?v=VlM8BXylDoQ", 8, 1))
-
-            cursor.execute("""
-            INSERT INTO tracks (title, youtube_link, artist_id, genre_id)
-            VALUES (?, ?, ?, ?)
-            """, ("No Eyes", "https://www.youtube.com/watch?v=tK7Vv0yS2B4", 9, 1))
-
-            cursor.execute("""
-            INSERT INTO tracks (title, youtube_link, artist_id, genre_id)
-            VALUES (?, ?, ?, ?)
-            """, ("Heartbeat", "https://www.youtube.com/watch?v=6hC5M2iQ9r4", 9, 1))
-
-            cursor.execute("""
-            INSERT INTO tracks (title, youtube_link, artist_id, genre_id)
-            VALUES (?, ?, ?, ?)
-            """, ("The Drums (Din Daa Daa)", "https://www.youtube.com/watch?v=1v2mJ0nG4nI", 9, 2))
-
-            cursor.execute("""
-            INSERT INTO tracks (title, youtube_link, artist_id, genre_id)
-            VALUES (?, ?, ?, ?)
-            """, ("17", "https://www.youtube.com/watch?v=Vn1xRrG2Y7M", 10, 1))
-
-            cursor.execute("""
-            INSERT INTO tracks (title, youtube_link, artist_id, genre_id)
-            VALUES (?, ?, ?, ?)
-            """, ("Piece of Me", "https://www.youtube.com/watch?v=4z6QxNfP6dM", 10, 1))
-
-            cursor.execute("""
-            INSERT INTO tracks (title, youtube_link, artist_id, genre_id)
-            VALUES (?, ?, ?, ?)
-            """, ("Always", "https://www.youtube.com/watch?v=2P4mT9sY2uQ", 10, 1))
-
-            cursor.execute("""
-            INSERT INTO tracks (title, youtube_link, artist_id, genre_id)
-            VALUES (?, ?, ?, ?)
-            """, ("(It Goes Like) Nanana", "https://www.youtube.com/watch?v=sCz5y84dwuA", 11, 1))
-
-            cursor.execute("""
-            INSERT INTO tracks (title, youtube_link, artist_id, genre_id)
-            VALUES (?, ?, ?, ?)
-            """, ("Starry Night", "https://www.youtube.com/watch?v=5dJG_DdOuOM", 11, 1))
-
-            cursor.execute("""
-            INSERT INTO tracks (title, youtube_link, artist_id, genre_id)
-            VALUES (?, ?, ?, ?)
-            """, ("I Go", "https://www.youtube.com/watch?v=5qLTd8W8Y7U", 11, 1))
-
-            cursor.execute("""
-            INSERT INTO tracks (title, youtube_link, artist_id, genre_id)
-            VALUES (?, ?, ?, ?)
-            """, ("Cola", "https://www.youtube.com/watch?v=qke-jOUqSXU", 12, 1))
-
-            cursor.execute("""
-            INSERT INTO tracks (title, youtube_link, artist_id, genre_id)
-            VALUES (?, ?, ?, ?)
-            """, ("Panic Room", "https://www.youtube.com/watch?v=R3JtQq9tG9c", 12, 1))
-
-            cursor.execute("""
-            INSERT INTO tracks (title, youtube_link, artist_id, genre_id)
-            VALUES (?, ?, ?, ?)
-            """, ("Breathe", "https://www.youtube.com/watch?v=VbQJ0hQqK4A", 12, 1))
-
-            cursor.execute("""
-            INSERT INTO tracks (title, youtube_link, artist_id, genre_id)
-            VALUES (?, ?, ?, ?)
-            """, ("Slow Down", "https://www.youtube.com/watch?v=8M6J6Vg0F4I", 13, 1))
-
-            cursor.execute("""
-            INSERT INTO tracks (title, youtube_link, artist_id, genre_id)
-            VALUES (?, ?, ?, ?)
-            """, ("Free", "https://www.youtube.com/watch?v=bwQ5nq6mF6k", 13, 1))
-
-            cursor.execute("""
-            INSERT INTO tracks (title, youtube_link, artist_id, genre_id)
-            VALUES (?, ?, ?, ?)
-            """, ("It Is What It Is", "https://www.youtube.com/watch?v=F4M4w7W0V0w", 13, 1))
-
-            cursor.execute("""
-            INSERT INTO tracks (title, youtube_link, artist_id, genre_id)
-            VALUES (?, ?, ?, ?)
-            """, ("Latch", "https://www.youtube.com/watch?v=93ASUImTedo", 14, 1))
-
-            cursor.execute("""
-            INSERT INTO tracks (title, youtube_link, artist_id, genre_id)
-            VALUES (?, ?, ?, ?)
-            """, ("You & Me (Flume Remix)", "https://www.youtube.com/watch?v=OUkkaqSNduU", 14, 1))
-
-            cursor.execute("""
-            INSERT INTO tracks (title, youtube_link, artist_id, genre_id)
-            VALUES (?, ?, ?, ?)
-            """, ("Help Me Lose My Mind", "https://www.youtube.com/watch?v=SnI4CGjeVOM", 14, 1))
-
-            cursor.execute("""
-            INSERT INTO tracks (title, youtube_link, artist_id, genre_id)
-            VALUES (?, ?, ?, ?)
-            """, ("I'm Good (Blue)", "https://www.youtube.com/watch?v=90RLzVUuXe4", 15, 1))
-
-            cursor.execute("""
-            INSERT INTO tracks (title, youtube_link, artist_id, genre_id)
-            VALUES (?, ?, ?, ?)
-            """, ("When Love Takes Over", "https://www.youtube.com/watch?v=zudbz4hOcbc", 15, 1))
-
-            cursor.execute("""
-            INSERT INTO tracks (title, youtube_link, artist_id, genre_id)
-            VALUES (?, ?, ?, ?)
-            """, ("Play Hard", "https://www.youtube.com/watch?v=5dbEhBKGOtY", 15, 2))
-
-            cursor.execute("""
-            INSERT INTO tracks (title, youtube_link, artist_id, genre_id)
-            VALUES (?, ?, ?, ?)
-            """, ("Sugar", "https://www.youtube.com/watch?v=bvC_0foemLY", 16, 1))
-
-            cursor.execute("""
-            INSERT INTO tracks (title, youtube_link, artist_id, genre_id)
-            VALUES (?, ?, ?, ?)
-            """, ("Prayer in C", "https://www.youtube.com/watch?v=fiore9Z5iUg", 16, 1))
-
-            cursor.execute("""
-            INSERT INTO tracks (title, youtube_link, artist_id, genre_id)
-            VALUES (?, ?, ?, ?)
-            """, ("In Your Eyes", "https://www.youtube.com/watch?v=1__CAdTJ5JU", 16, 1))
-
-            cursor.execute("""
-            INSERT INTO tracks (title, youtube_link, artist_id, genre_id)
-            VALUES (?, ?, ?, ?)
-            """, ("Hypnotized", "https://www.youtube.com/watch?v=J5fE8xVjFvY", 17, 1))
-
-            cursor.execute("""
-            INSERT INTO tracks (title, youtube_link, artist_id, genre_id)
-            VALUES (?, ?, ?, ?)
-            """, ("Fireworks", "https://www.youtube.com/watch?v=8x-M7AkTvrQ", 17, 1))
 
         # PLAYLISTS
         cursor.execute("SELECT COUNT(*) FROM playlists")
         if cursor.fetchone()[0] == 0:
-            cursor.execute("INSERT INTO playlists (name, genre_id) VALUES (?, ?)", ("Deep House Mix", 1))
-            cursor.execute("INSERT INTO playlists (name, genre_id) VALUES (?, ?)", ("Tech House Mix", 2))
-            cursor.execute("INSERT INTO playlists (name, genre_id) VALUES (?, ?)", ("Afro House Mix", 3))
-            cursor.execute("INSERT INTO playlists (name, genre_id) VALUES (?, ?)", ("Progressive House Mix", 4))
+
+            playlists_data = [
+                ("Chicago House Essentials", 1),
+                ("Acid House Classics", 2),
+                ("Deep House Vibes", 3),
+                ("Progressive House Journey", 4),
+                ("French House Grooves", 5),
+                ("Funky House Party", 6),
+                ("Tribal House Energy", 7),
+                ("Afro House Sunset", 8),
+                ("Tropical House Chill", 9),
+                ("Electro House Festival", 10),
+                ("Bass House Madness", 11),
+                ("Slap House Hits", 12),
+                ("Future House Anthems", 13),
+                ("Garage House Selection", 14),
+                ("Lo-Fi House Nights", 15),
+                ("Minimal House Flow", 16),
+                ("Latin House Rhythm", 17)
+            ]
+
+            for playlist in playlists_data:
+                cursor.execute("""
+                INSERT INTO playlists (name, genre_id)
+                VALUES (?, ?)
+                """, playlist)
 
         conn.commit()
         conn.close()

@@ -1,32 +1,35 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1>Genres</h1>
+<div class="container">
+    <h1>Genres</h1>
 
-<!-- ADD FORM -->
-<form action="/add_genre" method="POST">
-    <input type="text" name="name" placeholder="Genre name" required>
-    <input type="text" name="description" placeholder="Description">
-    <button type="submit">Add Genre</button>
-</form>
+    <!-- ADD FORM -->
+    <form action="/add_genre" method="POST">
+        <input type="text" name="name" placeholder="Genre name" required>
+        <input type="text" name="description" placeholder="Description">
+        <button type="submit">Add Genre</button>
+    </form>
 
-<hr>
+    <hr>
 
-<ul>
-    <div class="card-container">
-    {% for genre in genres %}
-        <div class="card">
+    <ul>
+        <div class="card-container">
+        {% for genre in genres %}
+            <div class="card">
 
-            <h3>{{ genre[1] }}</h3>
+                <h3>{{ genre[1] }}</h3>
 
-            <p>{{ genre[2] }}</p>
+                <p>{{ genre[2] }}</p>
 
-            <a class="btn delete" href="/delete_genre/{{ genre[0] }}">Delete</a>
-            <a class="btn edit" href="/edit_genre/{{ genre[0] }}">Edit</a>
+                <a class="btn delete" href="/delete_genre/{{ genre[0] }}">Delete</a>
+                <a class="btn edit" href="/edit_genre/{{ genre[0] }}">Edit</a>
 
+            </div>
+        {% endfor %}
         </div>
-    {% endfor %}
-    </div>
-</ul>
+    </ul>
+</div>
+
 
 {% endblock %}

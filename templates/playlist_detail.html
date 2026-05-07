@@ -1,19 +1,22 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1>{{ playlist[1] }}</h1>
+<div class="container">
+    <h1>{{ playlist[1] }}</h1>
 
-{% for track in tracks %}
-    <div class="track-card">
-        <h3>{{ track[0] }}</h3>
-        <p>{{ track[1] }}</p>
+    {% for track in tracks %}
+        <div class="track-card">
+            <h3>{{ track[0] }}</h3>
+            <p>{{ track[1] }}</p>
 
-        {% if track[2] %}
-        <iframe width="300" height="170"
-            src="{{ track[2] | replace('watch?v=', 'embed/') }}">
-        </iframe>
-        {% endif %}
-    </div>
-{% endfor %}
+            {% if track[2] %}
+            <iframe width="300" height="170"
+                src="{{ track[2] | replace('watch?v=', 'embed/') }}">
+            </iframe>
+            {% endif %}
+        </div>
+    {% endfor %}    
+</div>
+
 
 {% endblock %}
