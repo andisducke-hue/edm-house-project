@@ -5,6 +5,7 @@
 
 <form method="POST" action="/add_artist">
     <input type="text" name="name" placeholder="Artist name" required>
+    <input type="text" name="description" placeholder="Description">
     <input type="text" name="image" placeholder="Image URL">
     <button type="submit">Add</button>
 </form>
@@ -19,6 +20,8 @@
             <h3>{{ artist[1] }}</h3>
 
             <img src="{{ artist[2] }}" class="artist-img">
+
+            <p>{{ artist[3] }}</p>
 
             <a class="btn delete" href="/delete_artist/{{ artist[0] }}">Delete</a>
             <a class="btn edit" href="/edit_artist/{{ artist[0] }}">Edit</a>
